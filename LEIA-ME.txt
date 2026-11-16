@@ -1,0 +1,9 @@
+JARVIS - PRETO E AMARELO
+1. Extraia este ZIP.
+2. Envie TODO o conteúdo desta pasta para a raiz do repositório GitHub chamado jarvis.
+3. No GitHub: Settings > Pages > Deploy from a branch > main > /(root) > Save.
+4. Aguarde a publicação e abra o endereço do GitHub Pages no celular.
+5. No Chrome/Samsung Internet, use o menu do navegador e escolha "Adicionar à tela inicial" ou "Instalar app", se aparecer.
+
+Esta é uma PWA, não um APK nativo. A interface e alguns comandos básicos podem funcionar offline depois do primeiro carregamento. Reconhecimento de voz depende do navegador e pode exigir internet. Esta versão não possui IA conversacional conectada.
+Não inclua senhas nem chaves privadas no repositório.
