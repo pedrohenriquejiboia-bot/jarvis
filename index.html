@@ -106,22 +106,22 @@ function help(){speak('Às ordens, senhor. Posso informar a hora e a data, abrir
 function command(raw){
   const original=(raw||'').trim();if(!original){speak('Por gentileza, senhor, informe um comando.');return;}
   const s=original.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  if(s.includes('hora')){speak('Sim, senhor. Agora são '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.');}
-  else if(s.includes('data')||s.includes('que dia')||s==='dia'){speak('Sim, senhor. Hoje é '+new Date().toLocaleDateString('pt-BR',{dateStyle:'full'})+'.');}
+  if(s.includes('hora')){speak('Senhor, agora são '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.');}
+  else if(s.includes('data')||s.includes('que dia')||s==='dia'){speak('Senhor, hoje é '+new Date().toLocaleDateString('pt-BR',{dateStyle:'full'})+'.');}
   else if(s==='ajuda'||s.includes('o que voce faz')||s.includes('seus comandos')){help();}
   else if(s.includes('quem e voce')||s.includes('seu nome')){speak('Sou o JARVIS, seu assistente pessoal. Estou operando no núcleo local, senhor.');}
   else if(s.includes('bom dia')){speak('Bom dia, senhor. Espero que tenha um excelente dia. Todos os sistemas locais estão operacionais.');}
   else if(s.includes('boa tarde')){speak('Boa tarde, senhor. Estou à disposição.');}
   else if(s.includes('boa noite')){speak('Boa noite, senhor. Estou à disposição.');}
-  else if(s.includes('youtube')){speak('Sim, senhor. O endereço do YouTube está disponível abaixo.');addLink('Abrir YouTube','https://www.youtube.com');}
-  else if(s.includes('whatsapp')){speak('Sim, senhor. O WhatsApp Web está disponível abaixo.');addLink('Abrir WhatsApp','https://web.whatsapp.com');}
-  else if(s.includes('google')&&!s.includes('pesquis')){speak('Sim, senhor. O Google está disponível abaixo.');addLink('Abrir Google','https://www.google.com');}
+  else if(s.includes('youtube')){speak('Senhor, o endereço do YouTube está disponível abaixo.');addLink('Abrir YouTube','https://www.youtube.com');}
+  else if(s.includes('whatsapp')){speak('Senhor, o WhatsApp Web está disponível abaixo.');addLink('Abrir WhatsApp','https://web.whatsapp.com');}
+  else if(s.includes('google')&&!s.includes('pesquis')){speak('Senhor, o Google está disponível abaixo.');addLink('Abrir Google','https://www.google.com');}
   else if(s.startsWith('pesquisar ')||s.startsWith('pesquise ')||s.startsWith('procure ')){
     const term=original.replace(/^(pesquisar|pesquise|procure)\s+/i,'').trim();
-    if(term){speak('Sim, senhor. Preparei uma pesquisa sobre '+term+'.');addLink('Pesquisar: '+term,'https://www.google.com/search?q='+encodeURIComponent(term));}
+    if(term){speak('Senhor, preparei uma pesquisa sobre '+term+'.');addLink('Pesquisar: '+term,'https://www.google.com/search?q='+encodeURIComponent(term));}
     else speak('Qual assunto deseja pesquisar, senhor?');
   }
-  else if(s.includes('status')||s.includes('sistema')){speak('Sim, senhor. O núcleo local está ativo. Conexão com a internet: '+(navigator.onLine?'disponível':'indisponível')+'.');}
+  else if(s.includes('status')||s.includes('sistema')){speak('Senhor, o núcleo local está ativo. Conexão com a internet: '+(navigator.onLine?'disponível':'indisponível')+'.');}
   else if(s.includes('obrigado')||s.includes('obrigada')){speak('Às ordens, senhor.');}
   else if(s.includes('silencio')||s.includes('ficar quieto')){if('speechSynthesis'in window)speechSynthesis.cancel();out.textContent='Modo silencioso ativado, senhor.';statusEl.textContent='SISTEMA LOCAL ATIVO • MODO SILENCIOSO';actionArea.innerHTML='';}
   else{speak('Compreendido, senhor. Ainda não tenho conhecimento para responder a essa pergunta sem a conexão com uma IA. Posso executar os comandos locais. Diga ajuda para consultar os comandos disponíveis.');}
@@ -135,7 +135,7 @@ document.getElementById('help').onclick=help;
 document.getElementById('youtube').onclick=()=>command('abrir youtube');
 document.getElementById('google').onclick=()=>command('abrir google');
 document.getElementById('clear').onclick=()=>{out.textContent='Conversa limpa, senhor. Estou aguardando novas instruções.';actionArea.innerHTML='';updateNetwork()};
-document.getElementById('testVoice').onclick=()=>speak('Teste de voz concluído. Sim, senhor.');
+document.getElementById('testVoice').onclick=()=>speak('Teste de voz concluído, senhor.');
 document.getElementById('talk').onclick=()=>{
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){speak('Senhor, o reconhecimento de voz não está disponível neste navegador. Utilize o campo de texto ou os botões.');return;}
