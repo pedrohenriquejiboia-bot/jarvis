@@ -1,9 +1,30 @@
-JARVIS - PRETO E AMARELO
-1. Extraia este ZIP.
-2. Envie TODO o conteúdo desta pasta para a raiz do repositório GitHub chamado jarvis.
-3. No GitHub: Settings > Pages > Deploy from a branch > main > /(root) > Save.
-4. Aguarde a publicação e abra o endereço do GitHub Pages no celular.
-5. No Chrome/Samsung Internet, use o menu do navegador e escolha "Adicionar à tela inicial" ou "Instalar app", se aparecer.
+JARVIS 2.0 — NÚCLEO LOCAL — PRETO E DOURADO
 
-Esta é uma PWA, não um APK nativo. A interface e alguns comandos básicos podem funcionar offline depois do primeiro carregamento. Reconhecimento de voz depende do navegador e pode exigir internet. Esta versão não possui IA conversacional conectada.
-Não inclua senhas nem chaves privadas no repositório.
+O QUE ESTA VERSÃO FAZ
+- Executa comandos locais programados sem precisar de internet, depois que a PWA tiver sido carregada e armazenada em cache.
+- Informa hora e data.
+- Responde a saudações e explica seus comandos.
+- Prepara links para YouTube, Google, WhatsApp Web e pesquisas.
+- Aceita comandos digitados.
+- Tenta reconhecer comandos por voz quando o navegador oferece SpeechRecognition. Esse recurso pode exigir internet e não é garantido offline.
+- Usa a síntese de voz do aparelho/navegador. A opção automática procura uma voz pt-BR com nome que sugira voz masculina, mas a seleção depende das vozes instaladas. Escolha outra voz na lista se necessário.
+- Mantém a formalidade e trata o usuário por "senhor".
+
+ATUALIZAR O SITE NO GITHUB
+1. Extraia este ZIP no computador.
+2. Abra o repositório GitHub do JARVIS e escolha Add file > Upload files.
+3. Envie os arquivos da pasta extraída para a raiz do repositório, mantendo a pasta icons e seus arquivos.
+4. Se o GitHub perguntar se deseja substituir arquivos existentes, confirme. Não apague a pasta icons.
+5. Em Commit changes, confirme o envio.
+6. Aguarde alguns minutos e abra o site novamente.
+
+ATUALIZAR O APP NO CELULAR
+- Feche o JARVIS e abra novamente com internet para receber a versão nova.
+- Se continuar mostrando a versão antiga, feche as abas do JARVIS e reabra. Em último caso, remova o atalho da tela inicial e instale novamente pelo navegador.
+
+IMPORTANTE
+- Este projeto é uma PWA, não um APK nativo.
+- Esta versão não possui IA generativa. As respostas são comandos programados, não conversa livre.
+- A interface pode funcionar offline após o cache inicial; reconhecimento de voz depende do suporte do navegador e pode precisar de internet.
+- A voz masculina não pode ser garantida se o aparelho não tiver uma voz masculina pt-BR instalada.
+- Não coloque senhas, tokens ou chaves de API no repositório público.

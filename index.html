@@ -4,42 +4,149 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080808">
-<meta name="description" content="JARVIS - assistente pessoal">
+<meta name="description" content="JARVIS - assistente pessoal offline">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/jarvis.svg">
 <title>JARVIS</title>
 <style>
-:root{color-scheme:dark;--gold:#f6c445;--muted:#b9a66c}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 35%,#29200b 0,#111 38%,#050505 78%);color:#fff;font-family:Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:20px}
-main{width:min(560px,100%);text-align:center;border:1px solid #80631b;border-radius:24px;padding:28px 20px;background:#080808dc;box-shadow:0 0 35px #d6a62922}
-h1{letter-spacing:.28em;color:var(--gold);font-size:clamp(28px,8vw,42px);margin:8px 0}p{color:#d4c79f;line-height:1.5}
-.arc{width:150px;height:150px;border:3px solid var(--gold);border-radius:50%;margin:25px auto;display:grid;place-items:center;box-shadow:0 0 22px #e9b72b66,inset 0 0 22px #e9b72b44;position:relative}
-.arc:before,.arc:after{content:"";position:absolute;border:1px solid var(--gold);border-radius:50%}.arc:before{inset:12px}.arc:after{inset:28px}
-.core{width:32px;height:32px;border-radius:50%;background:var(--gold);box-shadow:0 0 25px var(--gold)}
-button{border:1px solid var(--gold);background:#17130a;color:var(--gold);padding:13px 18px;border-radius:12px;font-size:15px;font-weight:bold;margin:6px;cursor:pointer}
-button.primary{background:var(--gold);color:#090909}.status{font-size:13px;color:var(--muted);margin:16px 0}.log{min-height:48px;border:1px solid #4c3c16;border-radius:12px;padding:12px;margin:18px 0;color:#f4e5b7}
-small{display:block;color:#998b65;margin-top:18px}
+:root{color-scheme:dark;--gold:#f6c445;--gold2:#b98a20;--muted:#c7b477;--panel:#0d0d0deF;--line:#66501b}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 28%,#30240b 0,#111 38%,#050505 78%);color:#f7f2df;font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;padding:18px}
+main{width:min(620px,100%);text-align:center;border:1px solid var(--line);border-radius:24px;padding:24px 18px;background:var(--panel);box-shadow:0 0 35px #d6a62922}
+.arc{width:126px;height:126px;border:3px solid var(--gold);border-radius:50%;margin:4px auto 16px;display:grid;place-items:center;box-shadow:0 0 22px #e9b72b66,inset 0 0 22px #e9b72b44;position:relative;animation:pulse 4s ease-in-out infinite}
+.arc:before,.arc:after{content:"";position:absolute;border:1px solid var(--gold);border-radius:50%}.arc:before{inset:10px}.arc:after{inset:25px}.core{width:27px;height:27px;border-radius:50%;background:var(--gold);box-shadow:0 0 25px var(--gold)}
+@keyframes pulse{50%{box-shadow:0 0 32px #e9b72b88,inset 0 0 28px #e9b72b66}}
+h1{letter-spacing:.28em;color:var(--gold);font-size:clamp(28px,8vw,40px);margin:8px 0} .tag{color:#d4c79f;margin:0 0 14px;font-size:13px;letter-spacing:.08em}
+.status{font-size:12px;color:var(--muted);margin:14px 0 10px;letter-spacing:.08em}.log{min-height:68px;border:1px solid #4c3c16;border-radius:12px;padding:14px;margin:12px 0;color:#f4e5b7;line-height:1.5;text-align:left;overflow-wrap:anywhere}.action-link{display:inline-block;color:var(--gold);margin-top:8px;font-weight:bold}
+.controls{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin:12px 0}button{border:1px solid var(--gold);background:#17130a;color:var(--gold);padding:12px 14px;border-radius:12px;font-size:14px;font-weight:bold;cursor:pointer}button.primary{background:var(--gold);color:#090909}button:active{transform:scale(.98)}
+.command-row{display:flex;gap:8px;margin:14px 0}.command-row input{min-width:0;flex:1;border:1px solid var(--line);border-radius:12px;background:#050505;color:white;padding:13px;font-size:15px}.command-row button{margin:0}
+.settings{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0;color:var(--muted);font-size:13px}.settings select{max-width:100%;background:#111;color:#f5e7b5;border:1px solid var(--line);border-radius:9px;padding:8px}
+.note{font-size:12px;color:#9e916a;line-height:1.5;margin:14px auto 0;max-width:500px}.badge{display:inline-block;border:1px solid #55431b;border-radius:99px;padding:5px 9px;color:#d9bd69;font-size:11px;margin:3px}
+@media(max-width:420px){main{padding:20px 13px}.command-row{flex-direction:column}.command-row button{width:100%}button{padding:11px 12px}}
 </style>
 </head>
-<body><main>
-<div class="arc"><div class="core"></div></div>
-<h1>J.A.R.V.I.S.</h1>
-<p>Just A Rather Very Intelligent System</p>
-<div class="status" id="status">SISTEMA INICIALIZADO • MODO LOCAL</div>
-<div class="log" id="output">Olá. Sou o JARVIS. Como posso ajudar?</div>
-<button class="primary" id="talk">🎙 Falar com JARVIS</button>
-<button id="time">Que horas são?</button>
-<button id="date">Qual é a data?</button>
-<button id="youtube">Abrir YouTube</button>
-<button id="search">Pesquisar na internet</button>
-<small>Esta versão possui comandos básicos locais. Recursos de IA conversacional ainda não estão conectados.</small>
+<body>
+<main>
+  <div class="arc" aria-hidden="true"><div class="core"></div></div>
+  <h1>J.A.R.V.I.S.</h1>
+  <p class="tag">JUST A RATHER VERY INTELLIGENT SYSTEM</p>
+  <span class="badge">NÚCLEO LOCAL 2.0</span><span class="badge" id="networkBadge">VERIFICANDO CONEXÃO</span>
+  <div class="status" id="status" aria-live="polite">SISTEMA INICIALIZADO • AGUARDANDO COMANDO</div>
+  <div class="log" id="output" aria-live="polite">Bom dia, senhor. Sistemas locais inicializados. Como posso ajudá-lo?</div>
+  <div id="actionArea"></div>
+  <div class="command-row">
+    <input id="commandInput" type="text" placeholder="Digite um comando, senhor..." autocomplete="off" aria-label="Digite um comando">
+    <button class="primary" id="send">Enviar</button>
+  </div>
+  <div class="controls">
+    <button class="primary" id="talk">🎙 Falar com JARVIS</button>
+    <button id="time">Que horas são?</button>
+    <button id="date">Qual é a data?</button>
+    <button id="help">Ajuda</button>
+  </div>
+  <div class="controls">
+    <button id="youtube">Abrir YouTube</button>
+    <button id="google">Abrir Google</button>
+    <button id="clear">Limpar conversa</button>
+  </div>
+  <div class="settings">
+    <label for="voiceSelect">Voz disponível:</label>
+    <select id="voiceSelect"><option value="">Voz automática do aparelho</option></select>
+    <button id="testVoice">Testar voz</button>
+  </div>
+  <p class="note">O núcleo local executa comandos programados sem internet. O reconhecimento de voz e a disponibilidade de uma voz masculina dependem do navegador e das vozes instaladas no aparelho. Esta versão ainda não possui IA generativa conectada.</p>
 </main>
 <script>
-const out=document.getElementById('output'),status=document.getElementById('status');
-function say(t){out.textContent=t; if('speechSynthesis'in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.pitch=.82;u.rate=.95;speechSynthesis.speak(u)}}
-function command(t){let s=t.toLowerCase();if(s.includes('hora'))say('Agora são '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}));else if(s.includes('data')||s.includes('dia'))say('Hoje é '+new Date().toLocaleDateString('pt-BR',{dateStyle:'full'}));else if(s.includes('youtube')){say('Abrindo YouTube.');window.open('https://www.youtube.com','_blank')}else if(s.includes('pesquis')){say('Abrindo uma pesquisa.');window.open('https://www.google.com','_blank')}else say('Ainda não tenho uma resposta inteligente para isso. Posso informar a hora, a data ou abrir sites.')}
-document.getElementById('time').onclick=()=>command('hora');document.getElementById('date').onclick=()=>command('data');
-document.getElementById('youtube').onclick=()=>command('youtube');document.getElementById('search').onclick=()=>{say('O que deseja pesquisar?');window.open('https://www.google.com','_blank')};
-document.getElementById('talk').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){say('O reconhecimento de voz não está disponível neste navegador. Você pode usar os botões.');return}let r=new SR();r.lang='pt-BR';r.onstart=()=>status.textContent='OUVINDO...';r.onend=()=>status.textContent='SISTEMA INICIALIZADO • MODO LOCAL';r.onerror=()=>say('Não consegui reconhecer sua voz. Tente novamente.');r.onresult=e=>command(e.results[0][0].transcript);r.start()};
-if('serviceWorker'in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script></body></html>
+const out=document.getElementById('output');
+const statusEl=document.getElementById('status');
+const actionArea=document.getElementById('actionArea');
+const input=document.getElementById('commandInput');
+const voiceSelect=document.getElementById('voiceSelect');
+let availableVoices=[];
+
+function updateNetwork(){
+  const online=navigator.onLine;
+  document.getElementById('networkBadge').textContent=online?'INTERNET DISPONÍVEL':'MODO OFFLINE';
+  statusEl.textContent=online?'SISTEMA LOCAL ATIVO • CONECTADO':'SISTEMA LOCAL ATIVO • OFFLINE';
+}
+window.addEventListener('online',updateNetwork);window.addEventListener('offline',updateNetwork);updateNetwork();
+
+function chooseDefaultVoice(){
+  const pt=availableVoices.filter(v=>/^pt[-_]BR/i.test(v.lang));
+  const candidates=pt.length?pt:availableVoices;
+  const maleHints=/\b(male|mascul|antonio|antônio|daniel|ricardo|felipe|joao|joão|paulo|thiago|bruno|lucas)\b/i;
+  return candidates.find(v=>maleHints.test(v.name))||candidates.find(v=>/pt[-_]BR/i.test(v.lang))||candidates[0]||null;
+}
+function loadVoices(){
+  if(!('speechSynthesis' in window))return;
+  const previous=voiceSelect.value;
+  availableVoices=speechSynthesis.getVoices();
+  voiceSelect.innerHTML='<option value="">Automática (preferência masculina, se disponível)</option>';
+  availableVoices.forEach((v,i)=>{const op=document.createElement('option');op.value=String(i);op.textContent=v.name+' — '+v.lang;voiceSelect.appendChild(op)});
+  if(previous && availableVoices[Number(previous)])voiceSelect.value=previous;
+}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
+
+function speak(text){
+  out.textContent=text;actionArea.innerHTML='';
+  if(!('speechSynthesis' in window)){statusEl.textContent='RESPOSTA EM TEXTO • VOZ INDISPONÍVEL';return;}
+  speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(text);utterance.lang='pt-BR';utterance.pitch=.82;utterance.rate=.94;
+  let voice=null;
+  if(voiceSelect.value!=='' && availableVoices[Number(voiceSelect.value)])voice=availableVoices[Number(voiceSelect.value)];
+  else voice=chooseDefaultVoice();
+  if(voice)utterance.voice=voice;
+  utterance.onstart=()=>statusEl.textContent='JARVIS FALANDO • MODO LOCAL';
+  utterance.onend=updateNetwork;
+  speechSynthesis.speak(utterance);
+}
+function addLink(label,url){
+  const a=document.createElement('a');a.className='action-link';a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label+' ↗';actionArea.appendChild(a);
+}
+function help(){speak('Às ordens, senhor. Posso informar a hora e a data, abrir o YouTube ou o Google, pesquisar um assunto e explicar meus recursos. Experimente digitar: pesquisar astronomia.');}
+function command(raw){
+  const original=(raw||'').trim();if(!original){speak('Por gentileza, senhor, informe um comando.');return;}
+  const s=original.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if(s.includes('hora')){speak('Sim, senhor. Agora são '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.');}
+  else if(s.includes('data')||s.includes('que dia')||s==='dia'){speak('Sim, senhor. Hoje é '+new Date().toLocaleDateString('pt-BR',{dateStyle:'full'})+'.');}
+  else if(s==='ajuda'||s.includes('o que voce faz')||s.includes('seus comandos')){help();}
+  else if(s.includes('quem e voce')||s.includes('seu nome')){speak('Sou o JARVIS, seu assistente pessoal. Estou operando no núcleo local, senhor.');}
+  else if(s.includes('bom dia')){speak('Bom dia, senhor. Espero que tenha um excelente dia. Todos os sistemas locais estão operacionais.');}
+  else if(s.includes('boa tarde')){speak('Boa tarde, senhor. Estou à disposição.');}
+  else if(s.includes('boa noite')){speak('Boa noite, senhor. Estou à disposição.');}
+  else if(s.includes('youtube')){speak('Sim, senhor. O endereço do YouTube está disponível abaixo.');addLink('Abrir YouTube','https://www.youtube.com');}
+  else if(s.includes('whatsapp')){speak('Sim, senhor. O WhatsApp Web está disponível abaixo.');addLink('Abrir WhatsApp','https://web.whatsapp.com');}
+  else if(s.includes('google')&&!s.includes('pesquis')){speak('Sim, senhor. O Google está disponível abaixo.');addLink('Abrir Google','https://www.google.com');}
+  else if(s.startsWith('pesquisar ')||s.startsWith('pesquise ')||s.startsWith('procure ')){
+    const term=original.replace(/^(pesquisar|pesquise|procure)\s+/i,'').trim();
+    if(term){speak('Sim, senhor. Preparei uma pesquisa sobre '+term+'.');addLink('Pesquisar: '+term,'https://www.google.com/search?q='+encodeURIComponent(term));}
+    else speak('Qual assunto deseja pesquisar, senhor?');
+  }
+  else if(s.includes('status')||s.includes('sistema')){speak('Sim, senhor. O núcleo local está ativo. Conexão com a internet: '+(navigator.onLine?'disponível':'indisponível')+'.');}
+  else if(s.includes('obrigado')||s.includes('obrigada')){speak('Às ordens, senhor.');}
+  else if(s.includes('silencio')||s.includes('ficar quieto')){if('speechSynthesis'in window)speechSynthesis.cancel();out.textContent='Modo silencioso ativado, senhor.';statusEl.textContent='SISTEMA LOCAL ATIVO • MODO SILENCIOSO';actionArea.innerHTML='';}
+  else{speak('Compreendido, senhor. Ainda não tenho conhecimento para responder a essa pergunta sem a conexão com uma IA. Posso executar os comandos locais. Diga ajuda para consultar os comandos disponíveis.');}
+}
+
+document.getElementById('send').addEventListener('click',()=>{const v=input.value;input.value='';command(v)});
+input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value;input.value='';command(v)}});
+document.getElementById('time').onclick=()=>command('hora');
+document.getElementById('date').onclick=()=>command('data');
+document.getElementById('help').onclick=help;
+document.getElementById('youtube').onclick=()=>command('abrir youtube');
+document.getElementById('google').onclick=()=>command('abrir google');
+document.getElementById('clear').onclick=()=>{out.textContent='Conversa limpa, senhor. Estou aguardando novas instruções.';actionArea.innerHTML='';updateNetwork()};
+document.getElementById('testVoice').onclick=()=>speak('Teste de voz concluído. Sim, senhor.');
+document.getElementById('talk').onclick=()=>{
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){speak('Senhor, o reconhecimento de voz não está disponível neste navegador. Utilize o campo de texto ou os botões.');return;}
+  const rec=new SR();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
+  rec.onstart=()=>statusEl.textContent='OUVINDO • FALE AGORA, SENHOR';
+  rec.onend=updateNetwork;
+  rec.onerror=()=>speak('Não consegui reconhecer sua voz, senhor. Tente novamente ou digite o comando.');
+  rec.onresult=e=>command(e.results[0][0].transcript);
+  try{rec.start()}catch(e){speak('O microfone não pôde ser iniciado, senhor. Verifique a permissão do navegador.');}
+};
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{statusEl.textContent='NÚCLEO LOCAL ATIVO • CACHE PENDENTE'}));
+</script>
+</body>
+</html>
